@@ -48,7 +48,7 @@ namespace BankOfDotNet.API.Controllers
 
         // PUT: api/Customers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer([FromRoute] long id, [FromBody] Customer customer)
+        public async Task<IActionResult> UpdateCustomer([FromRoute] long id, [FromBody] Customer customer)
         {
             if (!ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace BankOfDotNet.API.Controllers
 
         // POST: api/Customers
         [HttpPost]
-        public async Task<IActionResult> PostCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> CreateCustomer([FromBody] Customer customer)
         {
             if (!ModelState.IsValid)
             {
