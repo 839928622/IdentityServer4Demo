@@ -24,7 +24,7 @@ namespace BankOfDotNet.API.Controllers
         [HttpGet]
         public IEnumerable<Customer> Getcustomers()
         {
-            return _context.customers;
+            return _context.Customers;
         }
 
         // GET: api/Customers/5
@@ -36,7 +36,7 @@ namespace BankOfDotNet.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var customer = await _context.customers.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
 
             if (customer == null)
             {
@@ -90,7 +90,7 @@ namespace BankOfDotNet.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.customers.Add(customer);
+            _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
@@ -105,13 +105,13 @@ namespace BankOfDotNet.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var customer = await _context.customers.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
             }
 
-            _context.customers.Remove(customer);
+            _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
 
             return Ok(customer);
@@ -119,7 +119,7 @@ namespace BankOfDotNet.API.Controllers
 
         private bool CustomerExists(long id)
         {
-            return _context.customers.Any(e => e.Id == id);
+            return _context.Customers.Any(e => e.Id == id);
         }
     }
 }

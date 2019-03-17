@@ -14,6 +14,6 @@ namespace BankOfDotNet.API.Models
 
         }
 
-        public DbSet<Customer> customers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }
