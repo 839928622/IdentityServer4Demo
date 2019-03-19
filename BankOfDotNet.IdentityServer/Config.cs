@@ -77,19 +77,19 @@ namespace BankOfDotNet.IdentityServer
 
                 },
 
-                //now we hace to clients
+                //now we hace 3 clients
 
             new Client
             {
                 ClientId="mvc",//与mvc中设置的一致
-                ClientName="MVC client",
+                ClientName="mvc client",
                 AllowedGrantTypes=GrantTypes.Implicit,
-                RedirectUris={ "http://localhost:50003/sigin-oidc"},//指定用户输入用户密码之后，返回的页面或者URI
+                RedirectUris={ "http://localhost:5003/signin-oidc"},//指定用户输入用户密码之后，返回的页面或者URI
                 PostLogoutRedirectUris={ "http://localhost:5003/signout-callback"},
                 AllowedScopes=new List<string>
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
-IdentityServerConstants.StandardScopes.Profile
+                    IdentityServerConstants.StandardScopes.Profile
                 }
 
             }
