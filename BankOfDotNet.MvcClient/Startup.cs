@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,22 @@ namespace BankOfDotNet.MvcClient
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();//turn off jwt claim type mapping ,ensure not change any return Claims from Authorization Server
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+
+            })
+            .AddCookie("Cookies")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.SignInScheme = "Cookies";
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+                options.ClientId = "mvc";
+                options.SaveTokens = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +65,7 @@ namespace BankOfDotNet.MvcClient
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();//plugin this middlewares in mvc pipeline
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
