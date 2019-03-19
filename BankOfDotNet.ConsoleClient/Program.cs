@@ -22,7 +22,7 @@ namespace BankOfDotNet.ConsoleClient
             }
             //Grab a bearer token
             var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
-            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("BankOfDotNetApi");//resourse that what we define on identityserver4
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync("bankOfDotNetApi");//resourse that what we define on identityserver4
             if (tokenResponse.IsError)
             {
                 Console.WriteLine(tokenResponse.Error);
