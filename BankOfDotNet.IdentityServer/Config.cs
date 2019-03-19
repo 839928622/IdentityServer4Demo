@@ -17,7 +17,7 @@ namespace BankOfDotNet.IdentityServer
                 new TestUser
                 {
                     SubjectId="1",
-                    Username="Mash",
+                    Username="Mosh",
                     Password="password"
 
                 },

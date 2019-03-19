@@ -13,6 +13,26 @@ namespace BankOfDotNet.ConsoleClient
      public  static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();
         private static async Task MainAsync()
         {
+            var discoRo = await DiscoveryClient.GetAsync("http://localhost:5000");
+            if (discoRo.IsError)
+            {
+                Console.WriteLine(discoRo.Error);
+                return;
+            }
+
+            //Grab a bearer token using ResourceOwnerPassword Grant type
+            var tokenClientRO = new TokenClient(discoRo.TokenEndpoint, "ro.client", "secret");
+            var tokenResponseRO = await tokenClientRO.RequestResourceOwnerPasswordAsync("Mosh","password","bankOfDotNetApi");
+            if (tokenResponseRO.IsError)
+            {
+                Console.WriteLine(tokenResponseRO.Error);
+                return;
+            }
+            Console.WriteLine(tokenResponseRO.Json);
+            Console.WriteLine("\n\n");
+
+
+            //using client credentials flow grant type
             //discover all the endpoints using metadata of identity server
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             if (disco.IsError)
