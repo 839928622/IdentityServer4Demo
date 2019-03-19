@@ -30,7 +30,7 @@ namespace BankOfDotNet.API
                 .AddIdentityServerAuthentication(options => {
                     options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
-                    options.ApiName = "bankOfDotNetApi";//at identityServer,we hava a API resources named :bankOfDotNetApi
+                    options.ApiName = "bankOfDotNetApi";//at identityServer,we hava a API resources named :bankOfDotNetApi ,this indicated that our .net core web app is protected by identityserver which the address is http://localhost:5000
                 });
             services.AddDbContext<BankContext>(options => options.UseInMemoryDatabase("BankingDb"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
