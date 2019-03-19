@@ -3,11 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 
 namespace BankOfDotNet.IdentityServer
 {
     public class Config
     {
+
+        public static List<TestUser> GetUsers()
+        {
+            return new List<TestUser>
+            {
+                new TestUser
+                {
+                    SubjectId="1",
+                    Username="Mash",
+                    Password="password"
+
+                },
+                new TestUser
+                {
+                    SubjectId="2",
+                    Username="a@b.com",
+                    Password="password1"
+
+                }
+            };
+        }
+
+
         public static IEnumerable<ApiResource> GetAllApiResources()
         {
             return new List<ApiResource>
