@@ -49,13 +49,30 @@ namespace BankOfDotNet.IdentityServer
                 {
                     ClientId="client",
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
+                    AllowedScopes={ "bankOfDotNetApi" },
                     ClientSecrets=
                     {
                         new Secret("secret".Sha256())
-                    },
-                    AllowedScopes={ "bankOfDotNetApi" }
+                    }
+                },
+
+                new Client
+                {
+                    ClientId="ro.client",//re(resource)
+                    AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes={ "bankOfDotNetApi"},
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    }
+                    
                 }
+
+                //now we hace to clients
+
             };
         }
+
+
     }
 }
