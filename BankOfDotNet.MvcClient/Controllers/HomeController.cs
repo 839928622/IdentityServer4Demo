@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using BankOfDotNet.MvcClient.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BankOfDotNet.MvcClient.Controllers
 {
@@ -32,7 +35,12 @@ namespace BankOfDotNet.MvcClient.Controllers
 
             return View();
         }
-        
+        public async Task Logout()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
+            
+        }
 
         public IActionResult Privacy()
         {
