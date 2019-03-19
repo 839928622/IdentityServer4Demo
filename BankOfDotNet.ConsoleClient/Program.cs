@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace BankOfDotNet.ConsoleClient
 {
     class Program
@@ -25,6 +30,35 @@ namespace BankOfDotNet.ConsoleClient
             }
             Console.WriteLine(tokenResponse.Json);
             Console.WriteLine("\n\n");
+
+            var client = new HttpClient();
+            client.SetBearerToken(tokenResponse.AccessToken);
+            var customerInfo = new StringContent(
+                JsonConvert.SerializeObject(new
+                {
+                    Id = 10,
+                    FirstName = "Mike",
+                    LastName = "Nancy"
+                }), Encoding.UTF8, "application/json");
+
+            var createCustomerRespinse = await client.PostAsync("http://localhost:54433/api/customers", customerInfo);
+            if (!createCustomerRespinse.IsSuccessStatusCode)
+            {
+                Console.WriteLine(createCustomerRespinse.StatusCode);
+            }
+
+            var getCustomerResponse = await client.GetAsync("http://localhost:54433/api/customers");
+            if(getCustomerResponse.IsSuccessStatusCode)
+            {
+                Console.WriteLine(getCustomerResponse.StatusCode);
+            }
+            else
+            {
+                var content = await getCustomerResponse.Content.ReadAsStringAsync();
+                Console.WriteLine(JArray.Parse(content));
+            }
+            Console.Read();
+
         }
     }
 }
