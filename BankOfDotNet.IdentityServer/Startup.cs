@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BankOfDotNet.IdentityServer
@@ -17,12 +21,33 @@ namespace BankOfDotNet.IdentityServer
         {
             services.AddMvc();
 
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appSettings", false)
+                .Build();//access to appSettings.json
+            string connectionString = config.GetSection("connectionString").Value;
+            var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+
+
+
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetAllApiResources())
-                .AddInMemoryClients(Config.GetClients())
-                .AddTestUsers(Config.GetUsers());
+                //.AddInMemoryIdentityResources(Config.GetIdentityResources())
+                //.AddInMemoryApiResources(Config.GetAllApiResources())
+                //.AddInMemoryClients(Config.GetClients())
+                .AddTestUsers(Config.GetUsers())
+            //configuration store :clients and resources
+              .AddConfigurationStore(options =>
+              {
+                  options.ConfigureDbContext = db => db.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationAssembly));
+              })
+
+              //operational store:tokens,constents,codes,etc
+              .AddOperationalStore(options =>
+              {
+                  options.ConfigureDbContext = db => db.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationAssembly));
+              });
                 
         }
 
