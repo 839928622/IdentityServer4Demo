@@ -23,7 +23,7 @@ namespace BankOfDotNet.IdentityServer
 
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appSettings", false)
+                .AddJsonFile("appSettings.json", false)
                 .Build();//access to appSettings.json
             string connectionString = config.GetSection("connectionString").Value;
             var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
