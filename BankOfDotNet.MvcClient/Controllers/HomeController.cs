@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BankOfDotNet.MvcClient.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.Web.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
